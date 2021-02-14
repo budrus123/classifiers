@@ -10,7 +10,7 @@ class KNN:
         self.k_neighbors = neighbors
         self.X_train = None
         self.y_train = None
-        self.distance_method = distance_method
+        self.distance_metric = distance_method
 
     def fit(self, X_train, y_train):
         self.X_train = X_train
@@ -27,7 +27,7 @@ class KNN:
     def find_k_nearest_instances(self, new_instance):
         distance_array = self.initialize_distance_array(new_instance)
         sorted_distance_array = sorted(distance_array, key=lambda i: i['distance'])
-        top_k_neighbors = sorted_distance_array[0:k_neighbors]
+        top_k_neighbors = sorted_distance_array[0:self.k_neighbors]
         return top_k_neighbors
 
     def vote_on_instance(self, top_k_neighbors):
@@ -44,6 +44,11 @@ class KNN:
         row_data = row[0].data
         data_length = len(row_data)
         sum = 0
+
+        # TODO REMOVE THIS, To handle missing data, TODO REMOVE THIS
+        if len(new_instance) != len(row_data):
+            return math.inf
+
         for i in range(data_length):
             if self.distance_metric == 'euclidean':
                 sum += (new_instance[i] - row_data[i]) ** 2
@@ -63,34 +68,12 @@ class KNN:
         return distance_array
 
 
-dataset_subsample = 760
-def load_dataset_file():
-    data = load_svmlight_file("datasets/binary/diabetes")
-    return data[0], data[1]
-
-def main():
-    X, y = load_dataset_file()
-    y = y[0:dataset_subsample]
-    X = X[0:dataset_subsample, ]
-    X_train, X_test, y_train, y_test = train_test_split(X, y,
-                                                        test_size=0.3,
-                                                        shuffle=True)
-
-    diabetes_instance = np.array([3.000000, 162.000000, 52.000000, 38.000000, 0.000000, 37.200001, 0.652000, 24.000000])
-    iris_instance = np.array([0.388889, -0.166667, 0.525424, 0.666667])
-
-    instances = np.array([diabetes_instance])
-    knn = KNN()
-    knn.fit(X_train, y_train)
-    print(instances)
-    predictions = knn.predict(instances)
-    print(predictions)
-    # top_k_neighbors = find_k_nearest_instances(X_train, diabetes_instance)
-    # prediction = vote_on_instance(top_k_neighbors, y_train)
-    # # print(prediction)
-    # accuracy = find_accuracy(X_train, y_train, X_test, y_test)
-    # print('Accuracy is: ' + str(accuracy * 100))
-
-
-if __name__ == '__main__':
-    main()
+    def score(self, X_test, y_test):
+        test_length = X_test.shape[0]
+        correct = 0
+        pred_instances = np.array([row.data for row in X_test])
+        predictions = self.predict(pred_instances)
+        for i in range(len(predictions)):
+            if int(predictions[i]) == int(y_test[i]):
+                correct += 1
+        return correct / test_length
