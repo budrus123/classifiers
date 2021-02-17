@@ -3,18 +3,20 @@ from sklearn.datasets import load_svmlight_file
 import math
 import operator
 from sklearn.model_selection import train_test_split
-
+import scipy
 
 class KNN:
     def __init__(self, neighbors=5, distance_method='euclidean'):
         self.k_neighbors = neighbors
         self.X_train = None
         self.y_train = None
+        self.number_of_features = 0
         self.distance_metric = distance_method
 
     def fit(self, X_train, y_train):
         self.X_train = X_train
         self.y_train = y_train
+        self.number_of_features = self.X_train.shape[1]
 
     def predict(self, instances):
         predictions = np.array([])
@@ -41,19 +43,12 @@ class KNN:
         return int(max(classes.items(), key=operator.itemgetter(1))[0])
 
     def find_distance(self, row, new_instance):
-        row_data = row[0].data
-        data_length = len(row_data)
         sum = 0
-
-        # TODO REMOVE THIS, To handle missing data, TODO REMOVE THIS
-        if len(new_instance) != len(row_data):
-            return math.inf
-
-        for i in range(data_length):
+        for i in range(self.number_of_features):
             if self.distance_metric == 'euclidean':
-                sum += (new_instance[i] - row_data[i]) ** 2
+                sum += (new_instance[0,i] - row[0,i]) ** 2
             else:
-                sum += math.abs(new_instance[i] - row_data[i])
+                sum += math.abs(new_instance[0,i] - row[0,i])
         if self.distance_metric == 'euclidean':
             return math.sqrt(sum)
         else:
@@ -71,8 +66,8 @@ class KNN:
     def score(self, X_test, y_test):
         test_length = X_test.shape[0]
         correct = 0
-        pred_instances = np.array([row.data for row in X_test])
-        predictions = self.predict(pred_instances)
+        # pred_instances = X_test[0]
+        predictions = self.predict(X_test)
         for i in range(len(predictions)):
             if int(predictions[i]) == int(y_test[i]):
                 correct += 1
