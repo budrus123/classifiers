@@ -15,43 +15,34 @@ class Preceptron:
         self.y_train = y_train
         number_of_weights = X_train.shape[1]
         number_of_instances = X_train.shape[0]
-        print(X_train.shape)
         self.weights = np.random.rand(number_of_weights)  * 2 + 1
-        print(self.weights)
         counter = 0
         wrong_counter = 11
         while wrong_counter > 0:
             wrong_counter = 0
             for i in range(number_of_instances):
-                # TODO REMOVE THIS, To handle missing data, TODO REMOVE THIS
-                if len(X_train[i].data) != len(self.weights):
-                    continue
-                y_prime = self.predict([X_train[i].data])
+                y_prime = self.predict([X_train[i]])
                 difference = (y_train[i] - y_prime)
                 if difference != 0:
                     wrong_counter += 1
                 else:
                     continue
-                delta_weights = self.learning_rate * difference * X_train[i].data
-                # print(delta_weights)
+                delta_weights = self.learning_rate * difference * X_train[i].A[0].data
                 self.weights += delta_weights
-                # print(difference)
             print('wrong counter: '+str(wrong_counter))
         print(self.weights)
 
     def predict(self, instances):
         predictions = np.array([])
         sum = 0
-
+        # THIS IS FOR ONE INSTANCE PREDICTION ONLY TODO
         for instance in instances:
-            summation = np.dot(instance.T.data,self.weights)
-        # print(summation)
+            instance_data_array = instance.A[0]
+            summation = np.dot(instance_data_array.T.data,self.weights)
+
         if summation > 0:
             return 2
         return 1
-
-    def find_k_nearest_instances(self, new_instance):
-        print()
 
     def score(self, X_test, y_test):
         return 0

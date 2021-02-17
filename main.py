@@ -15,13 +15,8 @@ def load_dataset(file_name):
     return data[0], data[1]
 
 def main():
-    # X, y = load_dataset("datasets/multiclass/iris_seprable.scale")
-    # X = pd.read_csv("datasets/binary/diabetes")
-    #
-    # iris = pd.read_csv("datasets/binary/a4a", sep=' ', decimal='.',
-    #                    header=None)
 
-    X, y = load_dataset("datasets/binary/a4a")
+    X, y = load_dataset("datasets/multiclass/iris.scale")
     y = y[0:dataset_subsample]
     X = X[0:dataset_subsample, ]
     X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3)
@@ -33,12 +28,15 @@ def main():
     # print(instances:
     # [0].data)
     # for i in range(1,10):
-    knn = KNN(neighbors=5)
-    knn.fit(X_train, y_train)
-    print(knn.score(X_test, y_test))
-    #
-    # perc = Preceptron()
-    # perc.fit(X_train, y_train)
+
+    # KNN STUFF here
+    # knn = KNN(neighbors=5)
+    # knn.fit(X_train, y_train)
+    # print(knn.score(X_test, y_test))
+
+    # Perceptron stuff below
+    perc = Preceptron()
+    perc.fit(X_train, y_train)
 
 
     '''
