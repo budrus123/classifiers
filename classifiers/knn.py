@@ -1,9 +1,6 @@
 import numpy as np
-from sklearn.datasets import load_svmlight_file
 import math
 import operator
-from sklearn.model_selection import train_test_split
-import scipy
 
 class KNN:
     def __init__(self, neighbors=5, distance_method='euclidean'):

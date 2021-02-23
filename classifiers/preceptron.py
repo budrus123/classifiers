@@ -1,8 +1,6 @@
 import numpy as np
-from sklearn.datasets import load_svmlight_file
 import math
 import operator
-from sklearn.model_selection import train_test_split
 
 
 class Preceptron:
@@ -46,25 +44,32 @@ class Preceptron:
 
 
 
-    # TODO: Compare the below with the old above code
+    '''
+    Training function:
+    Takes the X,y values and trains the perceptron on these values.
+    Loops until the number of mispredictions (wrong counter) is zero (converges).
+    At each point, find the prediction and if there is a misprediction, then
+    adjust the weights; weights = weights + (y*X).
+    '''
     def train_perceptron(self, X_train, y_train):
         number_of_weights = X_train.shape[1]
         number_of_instances = X_train.shape[0]
-        self.weights = np.random.rand(number_of_weights)  * 2 + 1
-        self.weights = np.array([0] * number_of_instances)
+        self.weights = np.array([0] * (number_of_weights + 1))
         wrong_counter = 0
-        while wrong_counter > 0:
+        while True:
             wrong_counter = 0
             for i in range(number_of_instances):
                 y_predict = self.predict([X_train[i]])
-                if y_train[i] != y_predict:
+                if y_train[i]* y_predict <= 0:
                     wrong_counter += 1
-                    delta_weights = self.learning_rate * y_train[i] * X_train[i].A[0].data
+                    delta_weights = (y_train[i] * X_train[i].A[0].data)
                     self.weights += delta_weights
-
+            if wrong_counter == 0:
+                break
+    '''
+    Prediction function:
+    returns the value of the weight vector by the data point.
+    '''
     def predict(self, instance):
         instance_data_array = instance.A[0]
-        prediction = np.dot(instance_data_array.T.data,self.weights)
-        if prediction > 0:
-            return 1
-        return -1
+        return np.dot(instance_data_array.T.data,self.weights)
