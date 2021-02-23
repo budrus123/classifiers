@@ -25,7 +25,7 @@ def main():
 
     # Decision tree below
 
-    dt = DecisionTree(X, y)
+    dt = DecisionTree(X, y, 'binary')
     dt.fit(X, y)
 
 

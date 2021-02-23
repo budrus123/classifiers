@@ -10,6 +10,7 @@ class KNN:
         self.number_of_features = 0
         self.distance_metric = distance_method
 
+
     def fit(self, X_train, y_train):
         self.X_train = X_train
         self.y_train = y_train
