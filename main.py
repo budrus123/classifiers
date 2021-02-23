@@ -6,27 +6,29 @@ from classifiers.decision_tree import DecisionTree
 from classifiers.preceptron import Preceptron
 import pandas as pd
 from joblib import Memory
+
 mem = Memory("./mycache")
 
-dataset_subsample = 20
+dataset_subsample = 500
+
 
 # @mem.cache
 def load_dataset(file_name):
     data = load_svmlight_file(file_name)
     return data[0], data[1]
 
-def main():
 
-    X, y = load_dataset("datasets/binary/small")
+def main():
+    X, y = load_dataset("datasets/multiclass/iris.scale")
     y = y[0:dataset_subsample]
     X = X[0:dataset_subsample, ]
 
-    # X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
     # Decision tree below
 
-    dt = DecisionTree(X, y, 'binary')
-    dt.fit(X, y)
+    # dt = DecisionTree(X, y, 'binary')
+    # dt.fit(X, y)
 
 
     # diabetes_instance = np.array([3.000000, 162.000000, 52.000000, 38.000000, 0.000000, 37.200001, 0.652000, 24.000000])
@@ -38,9 +40,9 @@ def main():
     # for i in range(1,10):
 
     # KNN STUFF here
-    # knn = KNN(neighbors=5)
-    # knn.fit(X_train, y_train)
-    # print(knn.score(X_test, y_test))
+    knn = KNN(neighbors=7)
+    knn.fit(X_train, y_train)
+    print(knn.score(X_test, y_test))
 
     # Perceptron stuff below
     # perc = Preceptron()
@@ -65,5 +67,7 @@ def main():
 
         X, y = get_data()
         '''
+
+
 if __name__ == '__main__':
     main()
