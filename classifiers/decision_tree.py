@@ -9,28 +9,24 @@ from collections import Counter
 
 class DecisionTree:
     def __init__(self, X_train, y_train, value_type):
-        self.X_train = None
-        self.y_train = None
-        self.number_of_features = 0
-        self.number_of_classes = len(set(y_train))
         self.X_train = X_train.toarray()
         self.y_train = y_train
+        self.number_of_features = self.X_train.shape[1]
+        self.number_of_classes = len(set(y_train))
         self.classes = set(y_train)
         self.value_type = value_type
         self.feature_count = np.diff(X_train.tocsc().indptr)
 
     def fit(self, X_train, y_train):
-        self.number_of_features = self.X_train.shape[1]
-        # print(X_train.shape)
-        #
-        # # number of times te feature was 1
-        #
-        # print(len(self.feature_count))
-        # print(self.feature_count)
-        dataset_entropy = self.entropy_of_dataset(self.X_train, self.y_train)
         self.relative_entropy_of_feature(self.X_train, self.y_train, 0)
-        i_g0 = self.information_gain_of_feature(self.X_train, self.y_train, 0)
-        print(i_g0)
+        used_features = []
+        features_gain = []
+        for i in range(self.number_of_features):
+            feature = {'feature_index': i,
+                       'feature_gain': self.information_gain_of_feature(self.X_train, self.y_train, i)}
+            features_gain.append(feature)
+        sorted_gains = sorted(features_gain, key=lambda i: i['feature_gain'], reverse=True)
+        print(sorted_gains)
 
     def predict(self, instances):
         print()
@@ -71,11 +67,8 @@ class DecisionTree:
             feature_values['0'] = {'value': 0, 'count': X.shape[0] - self.feature_count[feature_index]}
 
         entropy_sum = 0
-        # print(feature_values)
         for key, item in feature_values.items():
             probability = item['count'] / total_number_of_rows
-            # print(probability)
-            outlook_of_target = 0
             entropy_of_outlook_for_feature = self.entropy_of_outlook_for_feature(X, y, feature_index, item['value'])
             entropy_sum += probability * entropy_of_outlook_for_feature
         return entropy_sum
