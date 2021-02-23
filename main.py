@@ -20,12 +20,13 @@ def main():
     X, y = load_dataset("datasets/binary/small")
     y = y[0:dataset_subsample]
     X = X[0:dataset_subsample, ]
-    X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3)
+
+    # X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0)
 
     # Decision tree below
 
-    dt = DecisionTree()
-    dt.fit(X_train, y_train)
+    dt = DecisionTree(X, y)
+    dt.fit(X, y)
 
 
     # diabetes_instance = np.array([3.000000, 162.000000, 52.000000, 38.000000, 0.000000, 37.200001, 0.652000, 24.000000])
