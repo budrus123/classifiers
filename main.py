@@ -40,7 +40,7 @@ def main():
     # for i in range(1,10):
 
     # KNN STUFF here
-    knn = KNN(neighbors=7)
+    knn = KNN(neighbors=5)
     knn.fit(X_train, y_train)
     print(knn.score(X_test, y_test))
 
