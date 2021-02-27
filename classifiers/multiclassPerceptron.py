@@ -1,6 +1,4 @@
 import numpy as np
-import math
-import operator
 
 # Constants
 BIAS = 1
@@ -8,18 +6,42 @@ ITERATIONS = 10000
 
 
 class MulticlassPreceptron:
-    def __init__(self, possible_outcomes):
+    ''''''
+
+    '''
+    Initializer function to takes the possible classes for the 
+    data set.
+    '''
+
+    def __init__(self, possible_classes):
         self.learning_rate = 0.1
         self.X_train = None
         self.y_train = None
-        self.classes = set(possible_outcomes)
+        self.classes = set(possible_classes)
         self.number_of_features = 0
         self.number_of_classes = len(self.classes)
         self.weights = {}
 
+    '''
+    Function initialize the weights dictionary with zeros with 
+    the same length as the feature vector + 1 for the BIAS.
+    
+    Each class will have its own weights in the dictionary.
+    '''
+
     def initialize_weights(self):
         for data_class in self.classes:
             self.weights[str(data_class)] = np.array([0.0] * (self.number_of_features + 1))
+
+    '''
+    3. Compute the predicted outcome for each single instance in the data set. 
+    The outcome is computed as follows:
+        - For every class in the total number of classes,
+        compute the product of that class weight vector, with the 
+        data instance.
+        - Return the class that causes the biggest activation, meaning
+        the biggest product among all the different classes.
+        '''
 
     def find_closest_class(self, training_instance_data):
         max_prediction = 0
@@ -31,6 +53,33 @@ class MulticlassPreceptron:
                 max_prediction_class = perceptron_class
 
         return max_prediction_class
+
+    '''
+    Main Algorithm for the Multiclass Perceptron is as folows:
+
+    1. Initialize the weights dictionary with p weight vectors,
+    where p is the number of distinct classes or outcomes in the
+    data set.
+
+    2. Train the weight vector on the data set by a predefined
+    number of iterations.
+
+    3. In each iteration, compute the predicted outcome for each single
+    instance in the data set. The outcome is computed as follows:
+        - For every weight vector in the weights dictionary,
+        compute the product of that weight vector, with the 
+        data instance.
+        - Return the class that causes the biggest activation, meaning
+        the biggest product among all the different classes.
+
+    4. If the prediction class is the same as the expected class, then 
+    do nothing.
+
+    5. If the prediction class is different from the expected class, then:
+        - Add the feature vector to the weights of the expected class.
+        - Subtract the feature vector from the weights of the predicted (wrong) class.
+
+    '''
 
     def train_perceptron(self, X_train, y_train):
         self.X_train = X_train
@@ -50,6 +99,10 @@ class MulticlassPreceptron:
                     self.weights[str(int(y_pred))] -= training_instance_data
         print(self.weights)
 
+    '''
+    Function that takes a list of test instances, and returns an
+    array of predictions for those instances.
+    '''
     def predict(self, test_instances):
         number_of_test_instances = test_instances.shape[0]
         predictions = np.array([])
@@ -70,42 +123,3 @@ class MulticlassPreceptron:
 
         accuracy = correct_prediction_counter / number_of_test_instances
         return accuracy
-
-    '''
-    Training function:
-    Takes the X,y values and trains the perceptron on these values.
-    Loops until the number of mispredictions (wrong counter) is zero (converges).
-    At each point, find the prediction and if there is a misprediction, then
-    adjust the weights; weights = weights + (y*X).
-    '''
-    # def train_perceptron(self, X_train, y_train):
-    #     number_of_weights = X_train.shape[1]
-    #     number_of_instances = X_train.shape[0]
-    #     self.weights = np.array([0.0] * (number_of_weights+1))
-    #     wrong_counter = 0
-    #     while True:
-    #         wrong_counter = 0
-    #         for i in range(number_of_instances):
-    #             training_instance_data = X_train[i].A[0].T.data
-    #             training_instance_data = np.append(training_instance_data, BIAS)
-    #             y_predict = np.dot(training_instance_data, self.weights)
-    #             difference = (y_train[i] - y_predict)
-    #             print(difference)
-    #             if difference <= 0:
-    #                 wrong_counter += 1
-    #                 delta_weights = (difference * X_train[i].A[0].data)
-    #                 self.weights += delta_weights
-    #         print(wrong_counter)
-    #         if wrong_counter == 0:
-    #             break
-    #     print(self.weights)
-    # '''
-    # Prediction function:
-    # returns the value of the weight vector by the data point.
-    # '''
-    # def predict(self, instance):
-    #     instance_data_array = instance.A[0]
-    #     result = np.dot(instance_data_array.T.data,self.weights)
-    #     if result > 1.5:
-    #         return 2
-    #     return 1
