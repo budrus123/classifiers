@@ -10,7 +10,7 @@ from joblib import Memory
 
 mem = Memory("./mycache")
 
-dataset_subsample = 600
+dataset_subsample = 300
 
 
 # @mem.cache
@@ -20,8 +20,8 @@ def load_dataset(file_name):
 
 
 def main():
-    # X, y = load_dataset("datasets/multiclass/iris.scale")
-    X, y = load_dataset("datasets/binary/a4a")
+    X, y = load_dataset("datasets/multiclass/iris.scale")
+    # X, y = load_dataset("datasets/binary/a4a")
     y = y[0:dataset_subsample]
     X = X[0:dataset_subsample, ]
 
@@ -51,9 +51,9 @@ def main():
     # print(y_train)
     # perc = Preceptron()
     # perc.train_perceptron(X_train, y_train)
+    # score = perc.score(X_test, y_test)
 
-
-    m_perceptron = MulticlassPreceptron([-1,1])
+    m_perceptron = MulticlassPreceptron([1,2,3])
     m_perceptron.train_perceptron(X_train, y_train)
     predictions = m_perceptron.predict(X_test)
     score = m_perceptron.score(X_test, y_test)

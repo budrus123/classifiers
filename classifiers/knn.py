@@ -133,3 +133,4 @@ class KNN:
             if int(predictions[i]) == int(y_test[i]):
                 correct += 1
         return correct / test_length
+

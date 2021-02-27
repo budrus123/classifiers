@@ -2,9 +2,10 @@ import numpy as np
 import math
 import operator
 
-
 # Constants
 BIAS = 1
+ITERATIONS = 10000
+
 
 class Preceptron:
     def __init__(self):
@@ -54,35 +55,45 @@ class Preceptron:
     At each point, find the prediction and if there is a misprediction, then
     adjust the weights; weights = weights + (y*X).
     '''
+
     def train_perceptron(self, X_train, y_train):
         number_of_weights = X_train.shape[1]
         number_of_instances = X_train.shape[0]
-        self.weights = np.array([0.0] * (number_of_weights+1))
+        self.weights = np.array([0.0] * (number_of_weights + 1))
         wrong_counter = 0
-        while True:
+        for j in range(ITERATIONS):
             wrong_counter = 0
             for i in range(number_of_instances):
                 training_instance_data = X_train[i].A[0].T.data
                 training_instance_data = np.append(training_instance_data, BIAS)
+
                 y_predict = np.dot(training_instance_data, self.weights)
-                difference = (y_train[i] - y_predict)
-                print(difference)
-                if difference <= 0:
+                if y_predict * y_train[i] <= 0:
                     wrong_counter += 1
-                    delta_weights = (difference * X_train[i].A[0].data)
-                    self.weights += delta_weights
-            print(wrong_counter)
+                    self.weights += (y_train[i] * training_instance_data)
             if wrong_counter == 0:
                 break
         print(self.weights)
+
     '''
     Prediction function:
     returns the value of the weight vector by the data point.
     '''
+
     def predict(self, instance):
-        instance_data_array = instance.A[0]
-        result = np.dot(instance_data_array.T.data,self.weights)
-        if result > 1.5:
-            return 2
-        return 1
+        training_instance_data = instance.A[0].T.data
+        training_instance_data = np.append(training_instance_data, BIAS)
+        return np.dot(training_instance_data, self.weights)
+
+    def score(self, X_test, y_test):
+        number_of_test_instances = X_test.shape[0]
+        correct_prediction_counter = 0
+        for i in range(number_of_test_instances):
+            y_prediction = self.predict(X_test)
+            print(y_prediction)
+        #     if y_predictions[i] == y_test[i]:
+        #         correct_prediction_counter += 1
+        #
+        # accuracy = correct_prediction_counter / number_of_test_instances
+        return 0
 
