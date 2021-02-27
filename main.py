@@ -4,12 +4,13 @@ from sklearn.model_selection import train_test_split
 from classifiers.knn import KNN
 from classifiers.decision_tree import DecisionTree
 from classifiers.preceptron import Preceptron
+from classifiers.multiclassPerceptron import MulticlassPreceptron
 import pandas as pd
 from joblib import Memory
 
 mem = Memory("./mycache")
 
-dataset_subsample = 500
+dataset_subsample = 600
 
 
 # @mem.cache
@@ -19,7 +20,8 @@ def load_dataset(file_name):
 
 
 def main():
-    X, y = load_dataset("datasets/multiclass/iris.scale")
+    # X, y = load_dataset("datasets/multiclass/iris.scale")
+    X, y = load_dataset("datasets/binary/a4a")
     y = y[0:dataset_subsample]
     X = X[0:dataset_subsample, ]
 
@@ -40,16 +42,22 @@ def main():
     # for i in range(1,10):
 
     # KNN STUFF here
-    knn = KNN(neighbors=5)
-    knn.fit(X_train, y_train)
-    print(knn.score(X_test, y_test))
+    # knn = KNN(neighbors=5)
+    # knn.fit(X_train, y_train)
+    # print(knn.score(X_test, y_test))
 
     # Perceptron stuff below
+    # print(X_train)
+    # print(y_train)
     # perc = Preceptron()
-    # perc.fit(X_train, y_train)
+    # perc.train_perceptron(X_train, y_train)
 
 
-
+    m_perceptron = MulticlassPreceptron([-1,1])
+    m_perceptron.train_perceptron(X_train, y_train)
+    predictions = m_perceptron.predict(X_test)
+    score = m_perceptron.score(X_test, y_test)
+    print(score)
 
     '''
         Examples
