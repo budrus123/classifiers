@@ -95,6 +95,7 @@ class MulticlassPreceptron:
                 if y_pred != y_train[j]:
                     self.weights[str(int(y_train[j]))] += training_instance_data
                     self.weights[str(int(y_pred))] -= training_instance_data
+        return self.weights
 
     '''
     Function that takes a list of test instances, and returns an
@@ -106,7 +107,7 @@ class MulticlassPreceptron:
         for j in range(number_of_test_instances):
             training_instance_data = test_instances[j].A[0].T.data
             training_instance_data = np.append(training_instance_data, BIAS)
-            y_pred = self.find_closest_class(training_instance_data)  # TODO: Actually find the prediction
+            y_pred = self.find_closest_class(training_instance_data)
             predictions = np.append(predictions, y_pred)
         return predictions
 

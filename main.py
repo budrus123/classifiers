@@ -53,28 +53,12 @@ def main():
     # perc.train_perceptron(X_train, y_train)
     # score = perc.score(X_test, y_test)
 
-    m_perceptron = MulticlassPreceptron([1,2,3])
-    m_perceptron.train_perceptron(X_train, y_train)
+    possible_classes = [int(element) for element in set(y_train)]
+    m_perceptron = MulticlassPreceptron(possible_classes)
+    weights = m_perceptron.train_perceptron(X_train, y_train)
     predictions = m_perceptron.predict(X_test)
     score = m_perceptron.score(X_test, y_test)
     print(score)
-
-    '''
-        Examples
-    --------
-    To use joblib.Memory to cache the svmlight file::
-
-        from joblib import Memory
-        from .datasets import load_svmlight_file
-        mem = Memory("./mycache")
-
-        @mem.cache
-        def get_data():
-            data = load_svmlight_file("mysvmlightfile")
-            return data[0], data[1]
-
-        X, y = get_data()
-        '''
 
 
 if __name__ == '__main__':
