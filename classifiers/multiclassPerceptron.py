@@ -87,8 +87,6 @@ class MulticlassPreceptron:
         self.number_of_features = X_train.shape[1]
         number_of_training_instances = X_train.shape[0]
         self.initialize_weights()
-        print(self.weights)
-        # exit(0)
         for i in range(ITERATIONS):
             for j in range(number_of_training_instances):
                 training_instance_data = X_train[j].A[0].T.data
@@ -97,7 +95,6 @@ class MulticlassPreceptron:
                 if y_pred != y_train[j]:
                     self.weights[str(int(y_train[j]))] += training_instance_data
                     self.weights[str(int(y_pred))] -= training_instance_data
-        print(self.weights)
 
     '''
     Function that takes a list of test instances, and returns an
