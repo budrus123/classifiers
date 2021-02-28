@@ -118,11 +118,11 @@ class KNN:
         return distance_array
 
     '''
-    Function that returs the score of our KNN classifier.
+    Function that returns the score (accuracy) of our KNN classifier.
     
     It takes a testing feature array and a testing outcome array.
     The score is calculated by returning the number of correct 
-    classifications out of the totall number of testing instances.
+    classifications out of the total number of testing instances.
     '''
 
     def score(self, X_test, y_test):

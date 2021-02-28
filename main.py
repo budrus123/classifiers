@@ -74,22 +74,23 @@ def main():
                                                       subsample_size=data_set_subsample_size)
 
     # KNN STUFF here
-    knn = KNN(neighbors=5)
-    knn.fit(X_train, y_train)
-    print(knn.score(X_test, y_test))
+    # knn = KNN(neighbors=5)
+    # knn.fit(X_train, y_train)
+    # print(knn.score(X_test, y_test))
 
 
-    # possible_classes = [int(element) for element in set(y_train)]
-    # if len(possible_classes) == 2:
-    #     perceptron = Preceptron()
-    # else:
-    #     perceptron = MulticlassPreceptron(possible_classes)
-    #
-    # weights = perceptron.train_perceptron(X_train, y_train)
-    # predictions = perceptron.predict(X_test)
-    # score = perceptron.score(X_test, y_test)
-    # visualize_weights(weights, X_train.shape[1])
-    # print(score)
+    possible_classes = [int(element) for element in set(y_train)]
+    if len(possible_classes) == 2:
+        perceptron = Preceptron()
+    else:
+        perceptron = MulticlassPreceptron(possible_classes)
+
+    weights = perceptron.train_perceptron(X_train, y_train)
+    predictions = perceptron.predict(X_test)
+    print(predictions)
+    score = perceptron.score(X_test, y_test)
+    visualize_weights(weights, X_train.shape[1])
+    print(score)
 
 
 if __name__ == '__main__':

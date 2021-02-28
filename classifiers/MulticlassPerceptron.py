@@ -55,7 +55,7 @@ class MulticlassPreceptron:
         return max_prediction_class
 
     '''
-    Main Algorithm for the Multiclass Perceptron is as folows:
+    Main Algorithm for the Multi-class Perceptron is as follows:
 
     1. Initialize the weights dictionary with p weight vectors,
     where p is the number of distinct classes or outcomes in the
@@ -101,6 +101,7 @@ class MulticlassPreceptron:
     Function that takes a list of test instances, and returns an
     array of predictions for those instances.
     '''
+
     def predict(self, test_instances):
         number_of_test_instances = test_instances.shape[0]
         predictions = np.array([])
@@ -110,6 +111,14 @@ class MulticlassPreceptron:
             y_pred = self.find_closest_class(training_instance_data)
             predictions = np.append(predictions, y_pred)
         return predictions
+
+    '''
+    Function that returns the score (accuracy) of the Multi-class Perceptron.
+
+    It takes a testing feature array and a testing outcome array.
+    The score is calculated by returning the number of correct 
+    classifications out of the total number of testing instances.
+    '''
 
     def score(self, X_test, y_test):
         number_of_test_instances = X_test.shape[0]
