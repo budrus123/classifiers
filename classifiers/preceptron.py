@@ -4,7 +4,7 @@ import operator
 
 # Constants
 BIAS = 1
-ITERATIONS = 1000
+ITERATIONS = 50
 
 
 class Preceptron:
