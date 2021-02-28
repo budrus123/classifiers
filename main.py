@@ -1,9 +1,8 @@
 import numpy as np
 from sklearn.datasets import load_svmlight_file
-from classifiers.knn import KNN
-from classifiers.decision_tree import DecisionTree
-from classifiers.preceptron import Preceptron
-from classifiers.multiclassPerceptron import MulticlassPreceptron
+from classifiers.KNN import KNN
+from classifiers.Preceptron import Preceptron
+from classifiers.MulticlassPerceptron import MulticlassPreceptron
 from joblib import Memory
 import matplotlib.pyplot as plt
 
@@ -67,32 +66,30 @@ def visualize_weight_array(weights, number_of_features):
 
 def main():
     data_set_subsample_size = 300
-    X, y = load_data_set("datasets/multiclass/iris.scale")
-    # X, y = load_data_set("datasets/binary/a4a")
+    # X, y = load_data_set("datasets/multiclass/iris.scale")
+    X, y = load_data_set("datasets/binary/a4a")
 
     X_train, X_test, y_train, y_test = split_data_set(X, y,
                                                       test_size=0.3,
                                                       subsample_size=data_set_subsample_size)
 
     # KNN STUFF here
-    # knn = KNN(neighbors=5)
-    # knn.fit(X_train, y_train)
-    # print(knn.score(X_test, y_test))
+    knn = KNN(neighbors=5)
+    knn.fit(X_train, y_train)
+    print(knn.score(X_test, y_test))
 
-    # Perceptron stuff below
-    # perc = Preceptron()
-    # weights = perc.train_perceptron(X_train, y_train)
-    # score = perc.score(X_test, y_test)
-    # print(score)
+
+    # possible_classes = [int(element) for element in set(y_train)]
+    # if len(possible_classes) == 2:
+    #     perceptron = Preceptron()
+    # else:
+    #     perceptron = MulticlassPreceptron(possible_classes)
+    #
+    # weights = perceptron.train_perceptron(X_train, y_train)
+    # predictions = perceptron.predict(X_test)
+    # score = perceptron.score(X_test, y_test)
     # visualize_weights(weights, X_train.shape[1])
-
-    possible_classes = [int(element) for element in set(y_train)]
-    m_perceptron = MulticlassPreceptron(possible_classes)
-    weights = m_perceptron.train_perceptron(X_train, y_train)
-    predictions = m_perceptron.predict(X_test)
-    score = m_perceptron.score(X_test, y_test)
-    visualize_weights(weights, X_train.shape[1])
-    print(score)
+    # print(score)
 
 
 if __name__ == '__main__':
