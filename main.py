@@ -1,5 +1,8 @@
 import numpy as np
 from sklearn.datasets import load_svmlight_file
+# classifiers is a directory in my project
+# to import the different classifiers
+# (check github repo for more info)
 from classifiers.KNN import KNN
 from classifiers.Preceptron import Preceptron
 from classifiers.MulticlassPerceptron import MulticlassPreceptron

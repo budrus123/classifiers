@@ -34,14 +34,14 @@ class MulticlassPreceptron:
             self.weights[str(data_class)] = np.array([0.0] * (self.number_of_features + 1))
 
     '''
-    3. Compute the predicted outcome for each single instance in the data set. 
+    Compute the predicted outcome for each single instance in the data set. 
     The outcome is computed as follows:
         - For every class in the total number of classes,
         compute the product of that class weight vector, with the 
         data instance.
         - Return the class that causes the biggest activation, meaning
         the biggest product among all the different classes.
-        '''
+    '''
 
     def find_closest_class(self, training_instance_data):
         max_prediction = 0
