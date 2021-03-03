@@ -2,7 +2,7 @@ import numpy as np
 
 # Constants
 BIAS = 1
-ITERATIONS = 50
+ITERATIONS = 1000
 
 
 class Preceptron:
