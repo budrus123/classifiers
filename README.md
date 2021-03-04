@@ -84,7 +84,7 @@ This code can be observed below:
         perceptron = MulticlassPreceptron(possible_classes)
 ```
 
-## Binary Perceptron
+### Binary Perceptron
 
 This is the simple perceptron approach that was explained above. It involves two main operations which are explained below:
 1. The training operation (learning the weights): Here, the main goal is to learn the correct weights that can be used for the classification process this is done by using the `train_perceptron` function. The basic steps here are.
