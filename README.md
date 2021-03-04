@@ -6,6 +6,7 @@ CONTENTS OF THIS FILE
  * [Introduction](#intro)
  * [K-NN Classifier](#knn)
  * [Perceptron Classifier](#perceptron)
+ * [Usage](#usage)
 
 INTRODUCTION<a name="intro"></a> 
 ------------
@@ -97,7 +98,7 @@ This is the simple perceptron approach that was explained above. It involves two
 2. The prediction Operation: After the weights have been learned and set in the classifier, the next step is to actually use the weights for predicting never-before-seen test instances. This can be done by using the `predict` function which takes a list of instances and returns a list of predictions for those instances. Predicting instances is really simple, it only depends on the product of the trained weights and the test instance. If the product is greater than zero, then it belongs to the +1 class, otherwise, it belongs to the -1 class. Simple as that.
 
 
-## Multiclass Perceptron
+### Multiclass Perceptron
 
 The ordinary perceptron can only tell us if a certain data instance belongs to a set of two classes. This is done through the activation function (or threshold value) that is set for the classification. In our above binary perceptron, if the product of the weights and feature vectors exceeded zero, then we know it belonged to the +1 class. But what happens when we have 3 or more classes? We cannot use the simple perceptron to classify instances here. For the project, the Iris dataset has 3 different classes, and this approach was used for it.
 In this case, a different approach needs to be followed. The approach that was selected for this project depends on having multiple weight vectors (not just one). The number of weight vectors corresponds to the number of different classes we have. For example, for the Iris dataset, we will have three different weight vectors, each for their respective class. Meaning we will have a weight vector for class 1, another for class 2, and one final one for class 3. The multiclass perceptron has the same two main operations that the regular perceptron has (training and predicting), but they function in a different way. The main differences of the two are below:
@@ -108,7 +109,7 @@ In this case, a different approach needs to be followed. The approach that was s
     4. This keeps happening until we have exhausted all of our preset iterations constant.
 2. The prediction Operation: After the weights have been learned and set in the classifier, the next step is to actually use the weights for predicting never-before-seen test instances. This can be done by using the `predict` function which takes a list of instances and returns a list of predictions for those instances. Predicting instances uses the ` find_closest_class` function to find the weight vector that causes the biggest activation and returns the class that corresponds to that weight vector.
 
-Usage
+Usage<a name="usage"></a> 
 ------------
 >The main python file has both the K-NN classifier and the Perceptron running
 > for the Iris dataset. In addition, visualization for most important features
