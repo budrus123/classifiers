@@ -84,7 +84,7 @@ This code can be observed below:
         perceptron = MulticlassPreceptron(possible_classes)
 ```
 
-###Binary Perceptron
+###Binary Perceptron### 
 This is the simple perceptron approach that was explained above. It involves two main operations which are explained below:
 1. The training operation (learning the weights): Here, the main goal is to learn the correct weights that can be used for the classification process this is done by using the `train_perceptron` function. The basic steps here are.
 
@@ -96,7 +96,7 @@ This is the simple perceptron approach that was explained above. It involves two
 2. The prediction Operation: After the weights have been learned and set in the classifier, the next step is to actually use the weights for predicting never-before-seen test instances. This can be done by using the `predict` function which takes a list of instances and returns a list of predictions for those instances. Predicting instances is really simple, it only depends on the product of the trained weights and the test instance. If the product is greater than zero, then it belongs to the +1 class, otherwise, it belongs to the -1 class. Simple as that.
 
 
-###Multiclass Perceptron
+###Multiclass Perceptron###
 The ordinary perceptron can only tell us if a certain data instance belongs to a set of two classes. This is done through the activation function (or threshold value) that is set for the classification. In our above binary perceptron, if the product of the weights and feature vectors exceeded zero, then we know it belonged to the +1 class. But what happens when we have 3 or more classes? We cannot use the simple perceptron to classify instances here. For the project, the Iris dataset has 3 different classes, and this approach was used for it.
 In this case, a different approach needs to be followed. The approach that was selected for this project depends on having multiple weight vectors (not just one). The number of weight vectors corresponds to the number of different classes we have. For example, for the Iris dataset, we will have three different weight vectors, each for their respective class. Meaning we will have a weight vector for class 1, another for class 2, and one final one for class 3. The multiclass perceptron has the same two main operations that the regular perceptron has (training and predicting), but they function in a different way. The main differences of the two are below:
 1. The training operation: In this function, the training data is used to learn a set of weight vectors (not just one) by doing the following:
@@ -115,10 +115,8 @@ Usage
 $ python main.py
 ```
 ---
-[ ] Add classifier type as a parameter
-
-[ ] Add dataset as a parameter
-
-[ ] Add sub-sampling size and test size as a parameter
+-[ ] Add classifier type as a parameter
+-[ ] Add dataset as a parameter
+-[ ] Add sub-sampling size and test size as a parameter
 
 
